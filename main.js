@@ -50,7 +50,29 @@ var game = {
             $("#counter-number").html(game.counter);
             game.currentQuestion++;
             game.loadQuestion();
-        }
+        },
     
+    timeUp: function(){
+        $(`#counter-number`).html(game.counter);
+        panel.html(`<h2>Out of time</h2>`);
+        panel.append(`<h3>The correct answer was:`+ questions[this.currentQuestion].correctAnswer);
+        panel.append(`<img src = "`+ questions[this.currentQuestion].image + `"/>`)
 
+        if(game.currentQuestion===questions.length-1){
+            setTimeout(game.results, 3*1000);
+        }else{
+            setTimeout(game.nextQuestion,3*1000);
+        }
+    },
+
+    results: function(){
+        clearInterval(timer);
+        panel.html(`<h2>Here is how you did</h2>`);
+        $(`#counter-number`).html(game.counter);
+        panel.append(`<h3>Correct answers:`+ game.corret+`</h3>`);
+        panel.append(`<h3>Wrong answers:`+game.incorrect+`</h3>`);
+        panel.append(`<h3>Unanswered questions:`+questions.length -(game.corret+game.incorrect)+`</h3>`);
+        panel.append(`<br><button id="start-over">Start Over</button>`);
+        },
+        
 }
