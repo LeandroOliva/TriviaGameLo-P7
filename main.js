@@ -75,4 +75,49 @@ var game = {
         panel.append(`<br><button id="start-over">Start Over</button>`);
         },
         
+        cliked: function(e) {
+            clearInterval(timer)
+            if($(e.target).attr("date-name")===questions[game.currentQuestion].correctAnswer){
+                this.answeredCoreectly();
+
+            }else{
+                this.answeredincorectly();
+            }
+
+
+        },
+        answeredincorectly: function(){
+            game.incorrect++;
+            clearInterval(timer);
+            panel.html(`<h2>Nope</h2>`);
+            panel.append(`<h3> The correct answer was:` +questions[game.currentQuestion].correctAnswer+`</h3>`);
+            panel.append(`<img src="`+questions[game.currentQuestion].image+`"/>`);
+
+            if(game.currentQuestion===questions.length-1){
+                setTimeout(game.results, 3*1000);
+            }else{
+                setTimeout(game.nextQuestion,3*1000);
+            }
+        },
+        answeredCoreectly: function(){
+            game.correct++;
+            clearInterval(timer);
+            panel.html(`<h2>good</h2>`);
+            panel.append(`<img src="`+questions[game.currentQuestion].image+`"/>`);
+
+            if(game.currentQuestion===questions.length-1){
+                setTimeout(game.results, 3*1000);
+            }else{
+                setTimeout(game.nextQuestion,3*1000);
+            }
+        },
+        reset:function(){
+            this.currentQuestion=0;
+            this.counter=0;
+            this.corret=0;
+            this.incorrect=0;
+            this.loadQuestion();
+
+
+        }
 }
